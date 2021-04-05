@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import LifeCycleIcon from "../images/lifecycle-icon.svg";
 import PerformanceIcon from "../images/performance-icon.svg";
@@ -43,6 +43,12 @@ const DataCardWrapper = styled.div`
 `;
 
 const DataCard = () => {
+  const [performanceCount, setPerformanceCount] = useState(0);
+  useEffect(() => {
+    fetch("https://meshery.layer5.io/result/total")
+      .then(response => response.json())
+      .then(resultcount => setPerformanceCount(resultcount.total_runs));
+  }, []);
   return (
     <DataCardWrapper>
       <Row Vcenter>
@@ -79,10 +85,10 @@ const DataCard = () => {
                 <Counter
                   duration={3}
                   separator=","
-                  end={2000}
+                  end={performanceCount}
                   suffix="+" />
               </h3>
-              <p>Performance Tests run</p>
+              <p>Performance Tests runX</p>
             </li>
           </ul>
         </Col>

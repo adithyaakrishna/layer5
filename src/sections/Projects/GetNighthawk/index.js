@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "gatsby";
 
 import { Container, Row, Col } from "../../../reusecore/Layout";
@@ -21,6 +21,12 @@ import cncf from "./images/cncf-white.svg";
 import Gnhwrapper from "./gnh.style";
 
 const Projects = () => {
+  const [performanceCount, setPerformanceCount] = useState(0);
+  useEffect(() => {
+    fetch("https://meshery.layer5.io/result/total")
+      .then(response => response.json())
+      .then(resultcount => setPerformanceCount(resultcount.total_runs));
+  }, []);
   return (
     <Gnhwrapper id="projects">
       <Container>
@@ -45,7 +51,7 @@ const Projects = () => {
               <p>Histogram Statistics</p>
             </Col>
             <Col lg={3} md={3} sm={6}>
-              <h3>2,000+</h3>
+              <h3>{performanceCount}+</h3>
               <p>Meshery Tests</p>
             </Col>
             <Col lg={3} md={3} sm={6}>
